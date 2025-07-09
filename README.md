@@ -1,85 +1,137 @@
-# CAPSTONE PROJECT
+# Capstone Project: Dynamic Pricing Prediction for Parking
 
 ## Overview
 
-This project focuses on **dynamic parking price optimization** using real-world data. It explores the effectiveness of predictive pricing models to analyze and improve the cost efficiency of parking spaces across multiple lots in a city. The workflow includes extensive data exploration, model development, and visualization of predicted pricing trends over time.
+This project implements a **predictive pricing system** for parking lots using historical and time-based data. Developed entirely in **Google Colab**, it combines structured preprocessing, multiple modeling techniques, and rich visual analytics. The project explores two pricing models — one baseline and one context-aware — for improving revenue predictability and operational decisions.
 
 ---
 
 ## Tech Stack
 
-- **Python (Google Colab)** – Core development environment  
-- **Pandas, NumPy** – Data preprocessing and manipulation  
-- **Matplotlib, Plotly, Seaborn** – Data visualization  
-- **Scikit-learn** – Model building and evaluation  
-- **XGBoost** – Advanced gradient boosting for model accuracy  
-- **Pathlib / OS** – File management  
-- **Google Drive Integration** – For file storage and dataset retrieval  
+- **Python 3**
+- **Google Colab** – Notebook-based development
+- **Pandas** – Data preprocessing
+- **NumPy** – Numerical operations
+- **Matplotlib & Seaborn** – Plotting and EDA
+- **Scikit-learn** – Modeling and evaluation
+- **XGBoost** – Advanced model
+- **Pathway** – For stream simulation and file handling
+- **Pathlib** – Clean file I/O handling
 
 ---
 
 ## Architecture Diagram
+---
 
-```mermaid
-graph TD
-    A[Raw Dataset (.csv)] --> B[Google Drive / Colab Mount]
-    B --> C[Data Preprocessing & Cleaning]
-    C --> D[Exploratory Data Analysis (EDA)]
-    D --> E1[Model 1: Predictive Pricing]
-    D --> E2[Model 2: Time Series Forecast]
-    E1 --> F1[Visualize Predictions]
-    E2 --> F2[Visualize Predictions]
-    F1 & F2 --> G[Comparison & Analysis]
+<img src="https://github.com/ar-yansingh/images/blob/main/Untitled%20diagram%20_%20Mermaid%20Chart-2025-07-09-155650.png" alt="Architecture Diagram" height="720" />
+
+---
+
+
+## Project Workflow
+
+### 1. **Data Preprocessing**
+
+- Mounted Google Drive for file access
+- Cleaned timestamps, missing values, and encoded vehicle and lot-level variables
+- Mapped numeric weights to variables like `VehicleType`, `TrafficCondition`, etc.
+
+---
+
+## Pricing Models
+
+### Model 1: Historical Average Pricing
+
+A baseline model that predicts prices using historical averages or medians for each lot and hour segment.
+
+```python
+Price = base_price + α * (avg_occupancy) + β * vehicle_weight
+```
+
+Pros:
+- Simple and fast  
+Cons:
+- Ignores real-time context like traffic or demand spikes
+
+**Model 1 Output (Static Plot):**  
+![Model 1 Prediction](https://github.com/ar-yansingh/images/blob/main/Dynamic%20parking%20price%20over%20time(model1).png)
+
+---
+
+### Model 2: Context-Aware Dynamic Model
+
+Incorporates temporal and environmental variables such as occupancy ratio, time of day, and vehicle type.
+
+```python
+Price = BASE + α * (Occupancy / Capacity)
+              + β * TimeWeight
+              + γ * VehicleWeight
+              + δ * IsWeekend
+```
+
+Pros:
+- Responds to real-time behavior and context  
+Cons:
+- Needs more preprocessing and tuning
+
+**Model 2 Output (Static Plot):**  
+![Model 2 Prediction](https://github.com/ar-yansingh/images/blob/main/Dynamic%20parking%20price%20over%20time(model2).png)
+
+---
+
+## Sample Visualization
+
+**Lot-wise Pricing Over Time (Historical):**  
+![Historical Lot Prices](https://github.com/ar-yansingh/images/blob/main/Price%20Comparison%20across%20lots(model2).png)
+
+---
+
+## Pathway Integration
+
+- **Used for**: Organizing output directories (`/notebooks/visuals`), managing filepaths, and controlling runtime storage
+- **Tool**: `pathlib.Path` and Colab drive mount
+- **Benefit**: Clean reproducible structure, enabling consistent saving of plots, processed data, and outputs
+
+---
+
+## Project Structure
+
+```bash
+.
+├── notebooks/
+│   ├── preprocessing_and_eda.ipynb         # Data wrangling and exploration
+│   └── modeling_and_visualization.ipynb    # Model training and evaluation
+│
+├── data/
+│   ├── parking_raw.csv
+│   └── parking_processed.csv
+│
+├── visuals/
+│   ├── model1_prediction.png
+│   ├── model2_prediction.png
+│   └── price_comparison.png
+│
+├── README.md
+└── report.pdf (optional)
 ```
 
 ---
 
-## Project Architecture & Workflow
+## Future Enhancements
 
-1. **Google Colab Setup**
-   - Connected to Google Drive using `from google.colab import drive`
-   - Managed file paths using `pathlib.Path` to ensure OS-agnostic and clean directory handling
-
-2. **Data Loading and Preprocessing**
-   - Parsed timestamps, handled missing values, formatted categorical variables
-   - Combined datasets where necessary to ensure consistency
-
-3. **Exploratory Data Analysis**
-   - Visualized parking price fluctuations across lots
-   - Identified temporal and seasonal trends
-
-   ![Price Comparison](notebooks/visuals/price_comparison.png)
-
-4. **Model Development**
-   - **Model 1:** Linear Regression-based model with adjusted price prediction  
-   - **Model 2:** XGBoost Time-Series optimized model with high responsiveness to changing trends
-
-   **Model 1 Output:**  
-   ![Model 1 Prediction](notebooks/visuals/model1_prediction.png)
-
-   **Model 2 Output:**  
-   ![Model 2 Prediction](notebooks/visuals/model2_prediction.png)
-
-5. **Pathway Usage**
-   - File and model organization was managed via `pathlib.Path`
-   - Outputs and visualizations stored in structured folders (e.g., `/notebooks/visuals`)
-   - Ensured reproducibility across sessions and team environments
-
-6. **Evaluation & Insights**
-   - Compared prediction curves for both models
-   - Highlighted periods of pricing inefficiency and suggested optimal pricing strategies
+- Real-time pricing integration using sensors or live APIs
+- ML-based demand forecasting (ARIMA, LSTM)
+- Integration into a dashboard or mobile app
 
 ---
 
-## How to Run
+## License
 
-1. Open the `.ipynb` notebook in **Google Colab**
-2. Connect to Google Drive
-3. Follow the notebook cells from top to bottom
-4. All visuals will be saved under the `/notebooks/visuals/` folder
+This project is built for educational and academic purposes.
 
 ---
 
-## Conclusion
+## Author
 
-This project demonstrates how predictive analytics can enhance real-world decisions in urban infrastructure. By modeling and analyzing pricing behavior over time, we enable data-driven adjustments that can optimize revenue and improve user satisfaction.
+- Built and tested in Google Colab
+- Contributions welcome via pull requests
