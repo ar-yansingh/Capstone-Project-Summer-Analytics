@@ -23,7 +23,7 @@ This project implements a **predictive pricing system** for parking lots using h
 ## Architecture Diagram
 ---
 
-<img src="https://github.com/ar-yansingh/images/blob/main/Untitled%20diagram%20_%20Mermaid%20Chart-2025-07-09-155650.png" alt="Architecture Diagram" height="720" />
+<img src="https://github.com/ar-yansingh/images/blob/main/Untitled%20diagram%20_%20Mermaid%20Chart-2025-07-09-161810.png" alt="Architecture Diagram" height="720" />
 
 ---
 
@@ -116,6 +116,22 @@ Cons:
 ```
 
 ---
+## System Extensibility
+
+The system is modular and can be extended with:
+
+- ** Real-Time Map Visualization**: Live display of parking availability.
+- ** API Integration with Sensors**: Connect to smart parking sensors for real-time data.
+- ** ML-Based Demand Prediction**: Use machine learning to forecast demand using historical and contextual data.
+
+## Pricing Logic
+
+Currently rule-based, but can be hybridized with:
+
+- Historical usage data  
+- Real-time trends  
+- ML-driven dynamic pricing
+
 
 ## Future Enhancements
 
@@ -125,13 +141,9 @@ Cons:
 
 ---
 
-## License
 
-This project is built for educational and academic purposes.
-
----
 
 ## Author
 
 - Built and tested in Google Colab
-- Contributions welcome via pull requests
+
